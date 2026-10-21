@@ -1,0 +1,22 @@
+{
+  "name": "esptech-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Landing page da ESPtech",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs --dev"
+  },
+  "dependencies": {
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "tailwindcss": "4.3.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
