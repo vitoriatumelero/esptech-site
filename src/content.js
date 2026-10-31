@@ -35,3 +35,22 @@ export const SERVICES = [
   { title: 'Web3 & Blockchain', lead: 3, text: 'Contratos inteligentes, rastreabilidade e tokenização onde a confiança precisa ser verificável.', tags: ['Smart contracts', 'Rastreabilidade', 'Tokenização'] },
   { title: 'Discovery & Prototipagem', lead: 'core', text: 'Do problema difuso a um protótipo testável em poucas semanas, antes de qualquer grande investimento.', tags: ['Imersão', 'Protótipo', 'Validação'] },
 ];
+
+export const PRODUCTS = [
+  {
+    name: 'Projeto 01',
+    summary: 'Descreva em uma frase o problema que este produto resolve e para quem ele foi construído.',
+    siteUrl: '',
+    caseUrl: '',
+    githubUrl: '',
+    tags: ['Web', 'IA'],
+  },
+  {
+    name: 'Projeto 02',
+    summary: 'Descreva em uma frase o objetivo principal e o impacto gerado por este produto.',
+    siteUrl: '',
+    caseUrl: '',
+    githubUrl: '',
+    tags: ['Web3', 'Produto'],
+  },
+];

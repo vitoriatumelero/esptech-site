@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { CONTACT, SOCIAL, COMPANY } from './config.js';
-import { MILESTONES, ORIGIN_PHOTOS, TEAM, SERVICES } from './content.js';
+import { MILESTONES, ORIGIN_PHOTOS, TEAM, SERVICES, PRODUCTS } from './content.js';
 /* Ícones no traço do Lucide, desenhados aqui para não depender de pacote extra. */
 const icon = (children) => ({ size = 20, strokeWidth = 1.5, className = '' }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth}
@@ -26,6 +26,7 @@ const NAV = [
   { label: 'Origem', href: '#origem' },
   { label: 'Time', href: '#time' },
   { label: 'Serviços', href: '#servicos' },
+  { label: 'Produtos', href: '#produtos' },
 ];
 
 function Header() {
@@ -471,7 +472,86 @@ function Services() {
   );
 }
 
-/* ----------------------------- 6. CONTATO ----------------------------- */
+/* ----------------------------- 6. PRODUTOS ----------------------------- */
+function ProductLinks({ product }) {
+  const links = [
+    { label: 'Site', href: product.siteUrl },
+    { label: 'Caso de uso', href: product.caseUrl },
+    { label: 'GitHub', href: product.githubUrl },
+  ];
+
+  return (
+    <ul className="flex flex-wrap gap-x-5 gap-y-2 text-[13px] font-light text-ink/55">
+      {links.map((item) => (
+        <li key={item.label}>
+          {item.href ? (
+            <a
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-b border-white/15 pb-0.5 transition-colors hover:border-mint hover:text-ink"
+            >
+              {item.label}
+            </a>
+          ) : (
+            <span className="text-ink/30">{item.label}: a definir</span>
+          )}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function Products() {
+  return (
+    <section id="produtos" className="gutter">
+      <div className="mx-auto max-w-[1320px] pb-32 pt-12 sm:pb-44">
+        <SectionRule index="04" label="Produtos" />
+
+        <div className="mt-20 grid grid-cols-1 items-end gap-y-10 lg:mt-28 lg:grid-cols-12 lg:gap-x-8">
+          <h2 className="text-[clamp(40px,6vw,92px)] font-extralight leading-[0.98] tracking-[-0.045em] text-ink lg:col-span-8">
+            Produtos que já
+            {' '}
+            <span className="font-serif font-normal italic tracking-[-0.02em] text-mint">entregamos</span>.
+          </h2>
+          <p className="max-w-[34ch] text-[16px] font-light leading-[1.75] text-ink/60 lg:col-span-4 lg:pb-3">
+            Cada projeto aponta para seu próprio site, caso de uso e repositório. Atualize os links em <span className="text-ink">content.js</span>.
+          </p>
+        </div>
+
+        <ul className="mt-20 border-t border-white/10 lg:mt-28">
+          {PRODUCTS.map((product, i) => (
+            <li
+              key={product.name}
+              className="grid grid-cols-1 gap-x-8 gap-y-8 border-b border-white/10 py-10 lg:grid-cols-12 lg:py-12"
+            >
+              <span className="text-[12px] font-light tabular-nums tracking-[0.2em] text-ink/35 lg:col-span-1">
+                0{i + 1}
+              </span>
+
+              <div className="lg:col-span-5">
+                <h3 className="text-[clamp(28px,3.2vw,48px)] font-extralight leading-[1.02] tracking-[-0.035em] text-ink">
+                  {product.name}
+                </h3>
+                <p className="mt-4 max-w-[42ch] text-[16px] font-light leading-[1.75] text-ink/65">{product.summary}</p>
+              </div>
+
+              <div className="lg:col-span-4 lg:pt-2">
+                <ProductLinks product={product} />
+              </div>
+
+              <ul className="flex flex-wrap gap-x-4 gap-y-1 text-[13px] font-light text-ink/45 lg:col-span-2 lg:flex-col lg:pt-2">
+                {(product.tags || []).map((tag) => <li key={tag}>{tag}</li>)}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/* ----------------------------- 7. CONTATO ----------------------------- */
 function Field({ id, label, type = 'text', placeholder, textarea = false, autoComplete }) {
   const cls = 'mt-3 block w-full border-0 border-b border-white/15 bg-transparent px-0 pb-3 text-[20px] font-light text-ink placeholder:text-ink/25 transition-colors focus:border-mint focus:outline-none focus:ring-0';
   return (
@@ -538,7 +618,7 @@ function Contact() {
   return (
     <section id="contato" className="gutter">
       <div className="mx-auto max-w-[1320px] pb-32 pt-12 sm:pb-40">
-        <SectionRule index="04" label="Contato" />
+        <SectionRule index="05" label="Contato" />
 
         <h2 className="mt-20 max-w-[16ch] text-[clamp(44px,7vw,112px)] font-extralight leading-[0.98] tracking-[-0.045em] text-ink lg:mt-28">
           Tem um problema{' '}
@@ -633,10 +713,10 @@ function Contact() {
   );
 }
 
-/* ----------------------------- 7. RODAPÉ ----------------------------- */
+/* ----------------------------- 8. RODAPÉ ----------------------------- */
 function Footer() {
   const cols = [
-    { title: 'Navegação', items: [['Origem', '#origem'], ['Time', '#time'], ['Serviços', '#servicos'], ['Contato', '#contato']] },
+    { title: 'Navegação', items: [['Origem', '#origem'], ['Time', '#time'], ['Serviços', '#servicos'], ['Produtos', '#produtos'], ['Contato', '#contato']] },
     { title: 'Redes', items: SOCIAL.filter((s) => s.url).map((s) => [s.label, s.url]) },
     { title: 'Estúdio', items: [['Quer construir com a gente?', '#contato']] },
   ];
@@ -682,6 +762,7 @@ function App() {
         <Origin />
         <Team />
         <Services />
+        <Products />
         <Contact />
         <Footer />
       </div>
