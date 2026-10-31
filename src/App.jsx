@@ -11,13 +11,39 @@ const X = icon(<><path d="M18 6 6 18"/><path d="m6 6 12 12"/></>);
 const ArrowRight = icon(<><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></>);
 const ArrowUpRight = icon(<><path d="M7 7h10v10"/><path d="M7 17 17 7"/></>);
 
-/* ------------------------------ LOGO ------------------------------
-   Contraste de espessura, como o NEXO: "ESP" pesado, "tech" finíssimo. */
+/* ------------------------------ LOGO ------------------------------ */
+const LS = 40, LR = 20.4, LD = 12.6;
+const logoCenters = Array.from({ length: 5 }, (_, k) => {
+  const a = (-90 + k * 72) * Math.PI / 180;
+  return { x: LS + LD * Math.cos(a), y: LS + LD * Math.sin(a) };
+});
+const logoCorePoints = Array.from({ length: 5 }, (_, k) => {
+  const a = (-90 + k * 72) * Math.PI / 180;
+  return `${LS + 8.5 * Math.cos(a)},${LS + 8.5 * Math.sin(a)}`;
+}).join(' ');
+
+const BrandSymbol = ({ className = '' }) => (
+  <svg viewBox="0 0 80 80" className={`brand-symbol ${className}`} aria-hidden="true">
+    {logoCenters.map((c, k) => (
+      <circle key={`logo-fill-${k}`} cx={c.x} cy={c.y} r={LR} fill="rgba(61,220,151,.11)" />
+    ))}
+    {logoCenters.map((c, k) => (
+      <circle key={`logo-stroke-${k}`} cx={c.x} cy={c.y} r={LR} fill="none" stroke="rgba(61,220,151,.8)" strokeWidth="0.9" />
+    ))}
+    <polygon points={logoCorePoints} fill="#52F0B8" />
+  </svg>
+);
+
+const Wordmark = ({ className = '' }) => (
+  <span className={`brand-word leading-none tracking-[-0.035em] text-ink ${className}`}>
+    <span className="font-extrabold">ESP</span><span className="font-semibold">tech</span>
+  </span>
+);
+
 const Logo = ({ className = '' }) => (
-  <a href="#topo" className={`rounded-full text-ink ${className}`} aria-label="ESPtech, início">
-    <span className="text-[22px] leading-none tracking-[-0.03em]">
-      <span className="font-extrabold">ESP</span><span className="font-extralight">tech</span>
-    </span>
+  <a href="#topo" className={`inline-flex items-center gap-3 rounded-full text-ink ${className}`} aria-label="ESPtech, início">
+    <BrandSymbol className="h-9 w-9 shrink-0" />
+    <Wordmark className="text-[28px] sm:text-[30px]" />
   </a>
 );
 
@@ -123,24 +149,39 @@ function Rings() {
       </defs>
 
       <g className="orbit">
+        <circle cx={C} cy={C} r={R + D - 6} fill="rgba(61,220,151,.08)" />
+
+        {centers.map((c, k) => (
+          <circle key={`fill-${k}`} cx={c.x} cy={c.y} r={R} fill="rgba(61,220,151,.12)" />
+        ))}
+
         {/* núcleo: só a área comum aos cinco discos, em menta sólido */}
-        <g className="core">{core('#3DDC97')}</g>
+        <g className="core">{core('#52F0B8')}</g>
+
+        <polygon
+          points={Array.from({ length: 5 }, (_, k) => {
+            const a = (-90 + k * 72) * Math.PI / 180;
+            return `${C + 68 * Math.cos(a)},${C + 68 * Math.sin(a)}`;
+          }).join(' ')}
+          fill="#62FFD0"
+          className="core"
+        />
 
         {/* círculo envolvente, quase invisível */}
-        <circle cx={C} cy={C} r={R + D} fill="none" stroke="rgba(242,245,243,.07)" strokeWidth="1" pathLength="1"
+        <circle cx={C} cy={C} r={R + D} fill="none" stroke="rgba(61,220,151,.34)" strokeWidth="1" pathLength="1"
                 className="ring" style={{ animationDelay: '0s', animationDuration: '5s' }} />
 
         {/* os cinco aros */}
         {centers.map((c, k) => (
-          <circle key={k} cx={c.x} cy={c.y} r={R} fill="none" pathLength="1"
-                  stroke={k === 0 ? 'rgba(61,220,151,.75)' : 'rgba(242,245,243,.30)'} strokeWidth={k === 0 ? 1.25 : 1}
+          <circle key={`line-${k}`} cx={c.x} cy={c.y} r={R} fill="none" pathLength="1"
+                  stroke={k === 0 ? 'rgba(61,220,151,.92)' : 'rgba(61,220,151,.62)'} strokeWidth={k === 0 ? 1.5 : 1.25}
                   className="ring" style={{ animationDelay: `${0.35 + k * 0.3}s` }}
                   transform={`rotate(${-90 + k * 72} ${c.x} ${c.y})`} />
         ))}
 
         {/* nós nos cruzamentos externos */}
         {nodes.map((p, i) => (
-          <rect key={i} x={p.x - 3.5} y={p.y - 3.5} width="7" height="7" fill="#C6F432"
+          <circle key={i} cx={p.x} cy={p.y} r="2.4" fill="rgba(98,255,208,.9)"
                 className="appear" style={{ animationDelay: `${3 + i * 0.12}s` }} />
         ))}
       </g>
@@ -185,7 +226,7 @@ function Hero() {
 
       {/* aros: à direita no desktop, por trás e mais apagados no celular */}
       <div aria-hidden="true"
-           className="pointer-events-none absolute -z-[5] opacity-40
+         className="pointer-events-none absolute -z-[5] opacity-70
                       left-1/2 top-[42%] w-[150vw] max-w-[760px] -translate-x-1/2 -translate-y-1/2
                       lg:left-auto lg:right-[-6%] lg:top-1/2 lg:w-[62vw] lg:max-w-[920px] lg:translate-x-0 lg:opacity-100">
         <Rings />
@@ -215,9 +256,10 @@ function Hero() {
           {/* régua fina com a assinatura, como no NEXO */}
           <div className="mt-[120px] flex items-center gap-6 sm:mt-[160px]">
             <span className="h-px flex-1" style={{ background: 'var(--rule)' }}></span>
-            <span className="text-[19px] leading-none tracking-[-0.03em] text-ink/90">
-              <span className="font-extrabold">ESP</span><span className="font-extralight">tech</span>
-            </span>
+            <div className="inline-flex items-center gap-2.5 text-ink/90">
+              <BrandSymbol className="h-6 w-6" />
+              <Wordmark className="text-[20px]" />
+            </div>
           </div>
         </div>
       </div>
@@ -417,13 +459,23 @@ function MiniVenn({ lead, id }) {
       </defs>
       {lead === 'core' && (
         <g clipPath={`url(#${id}-0)`}><g clipPath={`url(#${id}-1)`}><g clipPath={`url(#${id}-2)`}><g clipPath={`url(#${id}-3)`}>
-          <circle cx={miniCenters[4].x} cy={miniCenters[4].y} r={MR} fill="#3DDC97" />
+          <circle cx={miniCenters[4].x} cy={miniCenters[4].y} r={MR} fill="#52F0B8" />
         </g></g></g></g>
       )}
       {miniCenters.map((c, k) => (
-        <circle key={k} cx={c.x} cy={c.y} r={MR} fill="none"
-                stroke={lead === k ? '#3DDC97' : 'rgba(242,245,243,.22)'} strokeWidth={lead === k ? 1.4 : 0.9} />
+        <circle key={`mini-fill-${k}`} cx={c.x} cy={c.y} r={MR} fill={lead === k || lead === 'core' ? 'rgba(61,220,151,.22)' : 'rgba(61,220,151,.08)'} />
       ))}
+      {miniCenters.map((c, k) => (
+        <circle key={`mini-stroke-${k}`} cx={c.x} cy={c.y} r={MR} fill="none"
+                stroke={lead === k ? '#52F0B8' : 'rgba(61,220,151,.45)'} strokeWidth={lead === k ? 1.5 : 1} />
+      ))}
+      <polygon
+        points={Array.from({ length: 5 }, (_, k) => {
+          const a = (-90 + k * 72) * Math.PI / 180;
+          return `${MC + 5.6 * Math.cos(a)},${MC + 5.6 * Math.sin(a)}`;
+        }).join(' ')}
+        fill={lead === 'core' ? '#62FFD0' : 'rgba(98,255,208,.55)'}
+      />
     </svg>
   );
 }
@@ -740,9 +792,10 @@ function Footer() {
         </div>
 
         {/* assinatura em escala total */}
-        <p aria-hidden="true" className="mt-24 select-none whitespace-nowrap text-[clamp(64px,19.5vw,300px)] leading-[0.78] tracking-[-0.06em] text-ink">
-          <span className="font-extrabold">ESP</span><span className="font-extralight">tech</span>
-        </p>
+        <div aria-hidden="true" className="mt-24 flex items-end gap-5 text-ink sm:gap-8">
+          <BrandSymbol className="h-[clamp(56px,9vw,180px)] w-[clamp(56px,9vw,180px)]" />
+          <Wordmark className="whitespace-nowrap text-[clamp(64px,19.5vw,300px)] leading-[0.78]" />
+        </div>
 
         <div className="mt-8 flex flex-col gap-2 border-t border-white/10 py-8 text-[12px] font-light text-ink/40 sm:flex-row sm:justify-between">
           <span>© {new Date().getFullYear()} ESPtech{COMPANY.cnpj ? ` · CNPJ ${COMPANY.cnpj}` : ''}</span>
