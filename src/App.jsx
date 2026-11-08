@@ -383,17 +383,13 @@ function Team() {
           <h2 className="text-[clamp(56px,10vw,160px)] font-extralight leading-[0.9] tracking-[-0.055em] text-ink lg:col-span-8">
             O <span className="font-serif font-normal italic tracking-[-0.03em] text-mint">Time</span>
           </h2>
-          <p className="max-w-[34ch] text-[16px] font-light leading-[1.75] text-ink/60 lg:col-span-4 lg:pb-4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cinco repertórios, um núcleo.
-          </p>
         </div>
 
         {/* cabeçalho da tabela, só no desktop */}
         <div className="mt-20 hidden grid-cols-12 gap-x-8 border-b border-white/10 pb-4 text-[11px] font-light uppercase tracking-[0.24em] text-ink/40 lg:mt-28 lg:grid">
           <span className="col-span-2">Retrato</span>
           <span className="col-span-4">Fundador</span>
-          <span className="col-span-2">Stack</span>
-          <span className="col-span-4">Em uma frase</span>
+          <span className="col-span-6">Formação</span>
         </div>
 
         <ul className="mt-16 border-t border-white/10 lg:mt-0 lg:border-t-0">
@@ -421,13 +417,14 @@ function Team() {
                 )}
               </div>
 
-              <ul className="col-span-2 flex flex-wrap gap-x-4 gap-y-1 text-[15px] font-light text-ink/75 lg:col-span-2 lg:flex-col">
-                {p.stack.length ? p.stack.map((s) => <li key={s}>{s}</li>) : <li className="text-ink/30">A definir</li>}
+              <ul className="col-span-2 space-y-4 lg:col-span-6">
+                {(p.education || []).map((e) => (
+                  <li key={e.course + e.school}>
+                    <p className="text-[17px] font-light leading-[1.4] text-ink/85">{e.course}</p>
+                    <p className="mt-1 text-[12px] font-light uppercase tracking-[0.24em] text-ink/45">{e.school}</p>
+                  </li>
+                ))}
               </ul>
-
-              <p className="col-span-2 max-w-[30ch] font-serif text-[22px] italic leading-[1.35] text-ink/80 lg:col-span-4 lg:text-[24px]">
-                “{p.line}”
-              </p>
             </li>
           ))}
         </ul>
@@ -530,24 +527,22 @@ function ProductLinks({ product }) {
     { label: 'Site', href: product.siteUrl },
     { label: 'Caso de uso', href: product.caseUrl },
     { label: 'GitHub', href: product.githubUrl },
-  ];
+  ].filter((item) => item.href);
+
+  if (!links.length) return null;
 
   return (
     <ul className="flex flex-wrap gap-x-5 gap-y-2 text-[13px] font-light text-ink/55">
       {links.map((item) => (
         <li key={item.label}>
-          {item.href ? (
-            <a
-              href={item.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border-b border-white/15 pb-0.5 transition-colors hover:border-mint hover:text-ink"
-            >
-              {item.label}
-            </a>
-          ) : (
-            <span className="text-ink/30">{item.label}: a definir</span>
-          )}
+          <a
+            href={item.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="border-b border-white/15 pb-0.5 transition-colors hover:border-mint hover:text-ink"
+          >
+            {item.label}
+          </a>
         </li>
       ))}
     </ul>
@@ -566,9 +561,6 @@ function Products() {
             {' '}
             <span className="font-serif font-normal italic tracking-[-0.02em] text-mint">entregamos</span>.
           </h2>
-          <p className="max-w-[34ch] text-[16px] font-light leading-[1.75] text-ink/60 lg:col-span-4 lg:pb-3">
-            Cada projeto aponta para seu próprio site, caso de uso e repositório. Atualize os links em <span className="text-ink">content.js</span>.
-          </p>
         </div>
 
         <ul className="mt-20 border-t border-white/10 lg:mt-28">

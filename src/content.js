@@ -21,11 +21,16 @@ export const ORIGIN_PHOTOS = [
 ];
 
 export const TEAM = [
-  { name: 'João Gularte', photo: 'fotos/time-1.jpg', pos: '50% 30%', role: '', stack: [], github: '', linkedin: '', line: 'Lorem ipsum dolor sit amet, consectetur adipiscing.' },
-  { name: 'Gabriel Neughbauer', photo: 'fotos/time-4.jpg', pos: '50% 15%', role: '', stack: [], github: '', linkedin: '', line: 'Sed do eiusmod tempor incididunt ut labore et dolore.' },
-  { name: 'Pedro Silveira', photo: 'fotos/time-3.jpg', pos: '42% 30%', role: '', stack: [], github: '', linkedin: '', line: 'Ut enim ad minim veniam, quis nostrud exercitation.' },
-  { name: 'Pedro Eduardo da Silva', photo: 'fotos/time-2.jpg', pos: '50% 25%', role: '', stack: [], github: '', linkedin: '', line: 'Duis aute irure dolor in reprehenderit in voluptate.' },
-  { name: 'Vitória Tumelero', photo: 'fotos/time-5.jpg', pos: '50% 25%', role: '', stack: [], github: '', linkedin: '', line: 'Excepteur sint occaecat cupidatat non proident.' },
+  { name: 'João Gularte', photo: 'fotos/time-1.jpg', pos: '50% 30%', role: '', github: '', linkedin: '',
+    education: [{ course: 'Graduando em Análise e Desenvolvimento de Sistemas', school: 'Senac' }] },
+  { name: 'Gabriel Neughbauer', photo: 'fotos/time-4.jpg', pos: '50% 15%', role: '', github: '', linkedin: '',
+    education: [{ course: 'Técnico em Informática', school: 'IFRS' }, { course: 'Graduando em Ciência da Computação', school: 'UFPel' }] },
+  { name: 'Pedro Silveira', photo: 'fotos/time-3.jpg', pos: '42% 30%', role: '', github: '', linkedin: '',
+    education: [{ course: 'Técnico em Informática para Internet', school: 'IFRS' }, { course: 'Graduando em Sistemas de Informação', school: 'FURG' }] },
+  { name: 'Pedro Eduardo da Silva', photo: 'fotos/time-2.jpg', pos: '50% 25%', role: '', github: '', linkedin: '',
+    education: [{ course: 'Técnico em Informática para Internet', school: 'IFRS' }, { course: 'Graduando em Ciência da Computação', school: 'UFPel' }] },
+  { name: 'Vitória Tumelero', photo: 'fotos/time-5.jpg', pos: '50% 25%', role: '', github: '', linkedin: '',
+    education: [{ course: 'Técnica em Informática', school: 'CETEC UCS' }, { course: 'Graduanda em Ciência da Computação', school: 'UFPel' }] },
 ];
 
 export const SERVICES = [
@@ -38,19 +43,19 @@ export const SERVICES = [
 
 export const PRODUCTS = [
   {
-    name: 'Projeto 01',
-    summary: 'Descreva em uma frase o problema que este produto resolve e para quem ele foi construído.',
-    siteUrl: '',
+    name: 'Giro',
+    summary: 'Gestão inteligente de leitos hospitalares. Conecta a triagem à hotelaria, prevê o tempo de permanência e sugere o leito certo para cada paciente.',
+    siteUrl: 'https://esptechnologies.com.br/',
     caseUrl: '',
     githubUrl: '',
-    tags: ['Web', 'IA'],
+    tags: ['Saúde', 'IA'],
   },
   {
-    name: 'Projeto 02',
-    summary: 'Descreva em uma frase o objetivo principal e o impacto gerado por este produto.',
-    siteUrl: '',
+    name: 'Stockwoven',
+    summary: 'Uma ação, um token. Une as versões tokenizadas de cada ação em um só token, com um SDK para neobancos e fintechs.',
+    siteUrl: 'https://stockwoven.xyz/',
     caseUrl: '',
     githubUrl: '',
-    tags: ['Web3', 'Produto'],
+    tags: ['Web3', 'SDK'],
   },
 ];

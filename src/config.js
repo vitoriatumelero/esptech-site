@@ -6,7 +6,7 @@
 
 export const CONTACT = {
   // E-mail mostrado na página e usado como alternativa ao formulário.
-  email: 'contato@esptech.com.br',
+  email: 'esptechnologies@outlook.com',
 
   // Endereço que recebe o formulário. Com FormSubmit (grátis, sem cadastro):
   //   'https://formsubmit.co/ajax/SEU_EMAIL@dominio.com'
@@ -14,9 +14,9 @@ export const CONTACT = {
   formEndpoint: '',
 
   // Número exibido. Deixe '' para esconder a linha do WhatsApp.
-  whatsapp: '+55 (00) 00000-0000',
+  whatsapp: '+55 (51) 99179-9098',
   // Link de conversa: https://wa.me/55DDDNUMERO (só números). Deixe '' para mostrar só o texto.
-  whatsappUrl: '',
+  whatsappUrl: 'https://wa.me/5551991799098',
 };
 
 // Redes no rodapé. Itens com url vazia não aparecem.
